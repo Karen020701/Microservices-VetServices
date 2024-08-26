@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+             xmlns:tns="http://localhost:3016/toyService" 
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+             xmlns="http://schemas.xmlsoap.org/wsdl/" 
+             targetNamespace="http://localhost:3016/toyService" 
+             name="ToyService">
+
+  <types>
+    <xsd:schema targetNamespace="http://localhost:3016/toyService">
+      <xsd:element name="listToyRequest" type="xsd:anyType"/>
+      <xsd:element name="listToyResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="toyList" type="tns:ToyArray"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:complexType name="Toy">
+        <xsd:sequence>
+          <xsd:element name="id" type="xsd:int"/>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="price" type="xsd:decimal"/>
+          <xsd:element name="quantity" type="xsd:int"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="ToyArray">
+        <xsd:sequence>
+          <xsd:element name="Toy" type="tns:Toy" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </types>
+
+  <message name="listToyRequest">
+    <part name="parameters" element="tns:listToyRequest"/>
+  </message>
+  <message name="listToyResponse">
+    <part name="parameters" element="tns:listToyResponse"/>
+  </message>
+
+  <portType name="ToyServicePortType">
+    <operation name="listToy">
+      <input message="tns:listToyRequest"/>
+      <output message="tns:listToyResponse"/>
+    </operation>
+  </portType>
+
+  <binding name="ToyServiceSoapBinding" type="tns:ToyServicePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="listToy">
+      <soap:operation soapAction="http://localhost:3016/toyService/listToy"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+
+  <service name="ToyService">
+    <port name="ToyServiceSoapPort" binding="tns:ToyServiceSoapBinding">
+      <soap:address location="http://localhost:3016/wsdl"/>
+    </port>
+  </service>
+
+</definitions>

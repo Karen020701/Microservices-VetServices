@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+             xmlns:tns="http://localhost:3016/foodService" 
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+             xmlns="http://schemas.xmlsoap.org/wsdl/" 
+             targetNamespace="http://localhost:3016/foodService" 
+             name="FoodService">
+
+  <types>
+    <xsd:schema targetNamespace="http://localhost:3016/foodService">
+      <xsd:element name="listFoodRequest" type="xsd:anyType"/>
+      <xsd:element name="listFoodResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="foodList" type="tns:FoodArray"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:complexType name="Food">
+        <xsd:sequence>
+          <xsd:element name="id" type="xsd:int"/>
+          <xsd:element name="descrip" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="price" type="xsd:decimal"/>
+          <xsd:element name="quantity" type="xsd:int"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="FoodArray">
+        <xsd:sequence>
+          <xsd:element name="Food" type="tns:Food" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </types>
+
+  <message name="listFoodRequest">
+    <part name="parameters" element="tns:listFoodRequest"/>
+  </message>
+  <message name="listFoodResponse">
+    <part name="parameters" element="tns:listFoodResponse"/>
+  </message>
+
+  <portType name="FoodServicePortType">
+    <operation name="listFood">
+      <input message="tns:listFoodRequest"/>
+      <output message="tns:listFoodResponse"/>
+    </operation>
+  </portType>
+
+  <binding name="FoodServiceSoapBinding" type="tns:FoodServicePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="listFood">
+      <soap:operation soapAction="http://localhost:3016/foodService/listFood"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+
+  <service name="FoodService">
+    <port name="FoodServiceSoapPort" binding="tns:FoodServiceSoapBinding">
+      <soap:address location="http://localhost:3016/wsdl"/>
+    </port>
+  </service>
+
+</definitions>

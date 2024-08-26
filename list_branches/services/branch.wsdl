@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+             xmlns:tns="http://localhost:3016/branchService" 
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+             xmlns="http://schemas.xmlsoap.org/wsdl/" 
+             targetNamespace="http://localhost:3016/branchService" 
+             name="BranchService">
+
+  <types>
+    <xsd:schema targetNamespace="http://localhost:3016/branchService">
+      <xsd:element name="listBranchRequest" type="xsd:anyType"/>
+      <xsd:element name="listBranchResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="branchList" type="tns:BranchArray"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:complexType name="Branch">
+        <xsd:sequence>
+          <xsd:element name="id" type="xsd:int"/>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:element name="address" type="xsd:string"/>
+          <xsd:element name="phone_number" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="BranchArray">
+        <xsd:sequence>
+          <xsd:element name="Branch" type="tns:Branch" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </types>
+
+  <message name="listBranchRequest">
+    <part name="parameters" element="tns:listBranchRequest"/>
+  </message>
+  <message name="listBranchResponse">
+    <part name="parameters" element="tns:listBranchResponse"/>
+  </message>
+
+  <portType name="BranchServicePortType">
+    <operation name="listBranch">
+      <input message="tns:listBranchRequest"/>
+      <output message="tns:listBranchResponse"/>
+    </operation>
+  </portType>
+
+  <binding name="BranchServiceSoapBinding" type="tns:BranchServicePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="listBranch">
+      <soap:operation soapAction="http://localhost:3016/branchService/listBranch"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+
+  <service name="BranchService">
+    <port name="BranchServiceSoapPort" binding="tns:BranchServiceSoapBinding">
+      <soap:address location="http://localhost:3016/wsdl"/>
+    </port>
+  </service>
+
+</definitions>
