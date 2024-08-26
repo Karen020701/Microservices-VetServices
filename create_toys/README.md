@@ -24,7 +24,7 @@ URL
 Method: POST
 Description: This endpoint allows users to authenticate and obtain a JWT token.
 
-Add Medications
+Add Toys
 URL
 Method: POST
 Authentication: Requires JWT token from a user with vet role
