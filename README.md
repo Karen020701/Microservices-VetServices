@@ -7,6 +7,8 @@ Here are included different programming languages such as:
 - Python
 - Js
 - Java
+
+
 As well as 4 different types of architectures:
 - Rest Api
 - GraphQL
