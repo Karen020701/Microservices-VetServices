@@ -1,5 +1,5 @@
 #### Description
-This microservice allows the removal of accessories from the database, with role-based access restrictions. Only users with vet credentials can perform this operation. The microservice is developed in Java and follows a RESTful architecture.
+This microservice allows the delete accessories from the database, with role-based access restrictions. Only users with vet credentials can perform this operation. The microservice is developed in Java and follows a RESTful architecture.
 
 #### Requirements
 Java: JDK 11 or higher
@@ -12,7 +12,8 @@ JWT: For token-based authentication.
 Clone repository
 https://github.com/Karen020701/Microservices-VetServices.git
 cd Microservices_VClinic
-cd deleteAccessory
+
+Enter the microservice folders src -> main -> java, right click on the .java file and select Run Java to run the services.
 
 #### Security
 This microservice uses JSON Web Tokens (JWT) for authentication.
